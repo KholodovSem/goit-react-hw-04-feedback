@@ -10,16 +10,16 @@ function FeedbackWidget() {
   const [bad, setBad] = useState(0);
 
   const tipGoodFeedback = () => {
-    setGood(good + 1);
-    this.countTotalFeedback();
+    setGood((prevState) => prevState + 1);
+    countTotalFeedback();
   };
 
   const tipNeutralFeedback = () => {
-    setNeutral(neutral + 1);
+    setNeutral((prevState) => prevState + 1);
   };
 
   const tipBadFeedback = () => {
-    setBad(bad + 1);
+    setBad((prevState) => prevState + 1);
   };
 
   const countTotalFeedback = () => {
