@@ -1,71 +1,59 @@
-import React from 'react';
+import { useState } from 'react';
 import Buttons from './Buttons';
 import FeedbackSection from './FeedbackSection';
 import Statistic from './StatisticList';
 import Notifacation from './Notifacation';
 
-class FeedbackWidget extends React.Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+function FeedbackWidget() {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  tipGoodFeedback = () => {
-    this.setState((prevState) => ({
-      good: prevState.good + 1,
-    }));
+  const tipGoodFeedback = () => {
+    setGood(good + 1);
     this.countTotalFeedback();
   };
 
-  tipNeutralFeedback = () => {
-    this.setState((prevState) => ({
-      neutral: prevState.neutral + 1,
-    }));
+  const tipNeutralFeedback = () => {
+    setNeutral(neutral + 1);
   };
 
-  tipBadFeedback = () => {
-    this.setState((prevState) => ({
-      bad: prevState.bad + 1,
-    }));
+  const tipBadFeedback = () => {
+    setBad(bad + 1);
   };
 
-  countTotalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
+  const countTotalFeedback = () => {
+    return good + neutral + bad;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    return Math.round(this.state.good / this.countTotalFeedback() * 100);
+  const countPositiveFeedbackPercentage = () => {
+    return Math.round(good / countTotalFeedback() * 100);
 
   };
 
-  render() {
-    const {good, neutral, bad} = this.state;
-
-    return (
-      <>
-      <FeedbackSection title="Please leave feedback">
+  return (
+    <>
+      <FeedbackSection title='Please leave feedback'>
         <Buttons
-          tipGoodFeedback={this.tipGoodFeedback}
-          tipBadFeedback={this.tipBadFeedback}
-          tipNeutralFeedback={this.tipNeutralFeedback}
+          tipGoodFeedback={tipGoodFeedback}
+          tipBadFeedback={tipBadFeedback}
+          tipNeutralFeedback={tipNeutralFeedback}
         />
       </FeedbackSection>
-        { this.countTotalFeedback() > 0 ?
-          <FeedbackSection title="Statistics">
-            <Statistic
-              countBadFeedback={bad}
-              countTotalFeedback={this.countTotalFeedback}
-              countNeutralFeedback={neutral}
-              countGoodFeedback={good}
-              countPositiveFeedbackPercentage={this.countPositiveFeedbackPercentage}
-            />
-          </FeedbackSection> :
-          <Notifacation message="There is no feedback"/>
-        }
-      </>
-    );
-  }
+      {countTotalFeedback() > 0 ?
+        <FeedbackSection title='Statistics'>
+          <Statistic
+            countBadFeedback={bad}
+            countTotalFeedback={countTotalFeedback}
+            countNeutralFeedback={neutral}
+            countGoodFeedback={good}
+            countPositiveFeedbackPercentage={countPositiveFeedbackPercentage}
+          />
+        </FeedbackSection> :
+        <Notifacation message='There is no feedback' />
+      }
+    </>
+  );
 }
 
 export default FeedbackWidget;
