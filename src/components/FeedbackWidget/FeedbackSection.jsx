@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Section = styled.section`
   display: flex;
@@ -21,6 +22,10 @@ const FeedbackSection = ({children, title}) => (
   </Section>
 )
 
+FeedbackSection.propTypes = {
+  children: PropTypes.node,
+  title: PropTypes.string
+}
 
 export default FeedbackSection;
 

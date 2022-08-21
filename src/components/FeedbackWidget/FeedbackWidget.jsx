@@ -2,24 +2,23 @@ import { useState } from 'react';
 import Buttons from './Buttons';
 import FeedbackSection from './FeedbackSection';
 import Statistic from './StatisticList';
-import Notifacation from './Notifacation';
+import Notification from './Notifacation';
 
 function FeedbackWidget() {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const [feedback, setFeedback] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  });
 
-  const tipGoodFeedback = () => {
-    setGood((prevState) => prevState + 1);
+  const {good, neutral, bad} = feedback;
+
+  const tipFeedback = (name) => {
+    setFeedback(prevState => ({
+      ...prevState,
+      [name]: prevState[name] + 1,
+    }))
     countTotalFeedback();
-  };
-
-  const tipNeutralFeedback = () => {
-    setNeutral((prevState) => prevState + 1);
-  };
-
-  const tipBadFeedback = () => {
-    setBad((prevState) => prevState + 1);
   };
 
   const countTotalFeedback = () => {
@@ -34,11 +33,11 @@ function FeedbackWidget() {
   return (
     <>
       <FeedbackSection title='Please leave feedback'>
-        <Buttons
-          tipGoodFeedback={tipGoodFeedback}
-          tipBadFeedback={tipBadFeedback}
-          tipNeutralFeedback={tipNeutralFeedback}
-        />
+        <div>
+        {Object.keys(feedback).map((btn) => (
+          <Buttons name={btn} tipFeedback={tipFeedback} key={btn}/>
+        ))}
+        </div>
       </FeedbackSection>
       {countTotalFeedback() > 0 ?
         <FeedbackSection title='Statistics'>
@@ -50,7 +49,7 @@ function FeedbackWidget() {
             countPositiveFeedbackPercentage={countPositiveFeedbackPercentage}
           />
         </FeedbackSection> :
-        <Notifacation message='There is no feedback' />
+        <Notification message='There is no feedback' />
       }
     </>
   );

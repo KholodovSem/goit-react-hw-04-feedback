@@ -5,13 +5,13 @@ const Header = styled.h3`
 text-align: center;
 `
 
-const Notifacation = ({message}) => (
+const Notification = ({message}) => (
   <Header>{message}</Header>
 )
 
-Notifacation.propTypes = {
+Notification.propTypes = {
   message: PropTypes.string.isRequired
 }
 
-export default Notifacation;
+export default Notification;
 
